@@ -38,7 +38,7 @@ class Page
             }
             
             $renderFile = file_get_contents(SCRIPTS_DIR.$scriptIdentifier);
-            $excute = "\$renderResult = \"$renderFile\";"
+            $excute = '$renderResult = '.$renderFile.';';
 
             @eval($excute);
 
@@ -58,7 +58,7 @@ class Page
             }
             
             $renderFile = file_get_contents(PLUGINS_DIR.$pluginIdentifier);
-            $excute = "\$renderResult = \"$renderFile\";";
+            $excute = '$renderResult = '.$renderFile.';';
 
             @eval($excute);
             
