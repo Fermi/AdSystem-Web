@@ -1,15 +1,18 @@
 <?php
-//Global include paths.
-define("BASE_TEMPLATE_DIR",__FILE__.'../Templates');
-define("BASE_SCRIPT_DIR",__FILE__.'../Static/Js');
-define("BASE_STYLE_DIR",__FILE__.'../Static/Style');
-define("BASE_PLUGIN_DIR",__FILE__.'../Plugins');
-define("BASE_CONFIG_DIR",__FILE__.'../Config');
+//Dir.
+define("ROOT_DIR",dirname(dirname(__FILE__)));
+define("CONFIG_DIR",dirname(__FILE__));
 
-//Module include paths.
-define("CONTROLLER_MODULE",__FILE__.'../Controller');
-define("LOADER_MODULE",__FILE__.'../Loader');
-define("TOOL_MODULE",__FILE__.'../Tools');
+//Module.
+define("CONTROLLER_MODULE",ROOT_DIR.'/Controller');
+define("LANDER_MODULE",ROOT_DIR.'/Lander');
+define("LOADER_MODULE",ROOT_DIR.'/Loader');
+define("TOOL_MODULE",ROOT_DIR.'/Tool');
+define("DATA_MODULE",ROOT_DIR.'/Data');
 
-//Tool load options.
-define("DATABASE_MYSQL",'D0');
+
+//Options.
+//Database.
+define("DATABASE_NOT_POOL",1);
+#define("DATABASE_MULTI_HOST",1);
+define("DATABASE_MYSQL_DEFAULT",1);
