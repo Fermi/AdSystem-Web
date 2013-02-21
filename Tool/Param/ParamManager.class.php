@@ -1,22 +1,34 @@
 <?php
-require_once __FILE__.'../Config/Config.php';
+require_once dirname(dirname(__FILE__)).'/Config/Config.php';
 
-class ParamManager{
+class ParamManager{ 
     //Fetch uri fragments.
     public static function getURIFragment(){
         return self::getGet('fragment');
     }
     //Fetch params via get method.
     public static function getGet($name){
-        return self::_filterParam('GET',$name);
+        if(empty($name)){
+            return false;
+        }else{
+            return self::_filterParam('GET',$name);
+        }
     }
     //Fetch params via post method.
-    public static function getPost($name){
-        return self::_filterParam('POST',$name);
+    public static function getPost($name){ 
+        if(empty($name)){
+            return false;
+        }else{
+            return self::_filterParam('POST',$name);
+        }
     }
     //Fetch params via post or get method.
     public static function getRequest($name){
-        return self::_filterParam('REQUEST',$name);
+        if(empty($name)){
+            return false;
+        }else{
+            return self::_filterParam('REQUEST',$name);
+        }
     }
     //Filter invalid params.
     private static function _filterParam($method,$name){
@@ -57,7 +69,7 @@ class ParamManager{
         return $result;
     }
     //Identify invalid character.
-    private static function _identifyInvalid($str){
+    private static function _identifyInvalid($str){ 
         $invalid = array('"','=','#');
         $flag = false;
 
@@ -72,7 +84,7 @@ class ParamManager{
         return $flag;
     }
     //Convert character.
-    private static function _convertParam($str){
+    private static function _convertParam($str){ 
         $excepted = array(",","'","`");
         $exceptto = array("\,","\'","\`");
         str_replace($excepted,$exceptto,$str);
