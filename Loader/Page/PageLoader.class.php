@@ -17,7 +17,7 @@ class PageLoader{
             exit;
         }else{
             if(defined("CONTROLLER_MODULE")){
-                require CONTROLLER_MODULE.'/'.strtoupper($module_name).'/'.strtoupper($page_name);
+                require CONTROLLER_MODULE.'/'.$module_name.'Page/'.$page_name.'Page.class.php';
                 if (function_exists($loadMethodName)) {
                     call_user_func($loadMethodName);
                     exit;
@@ -38,7 +38,7 @@ class PageLoader{
             exit;
         }else{
             if(defined("CONTROLLER_MODULE")) {
-                require CONTROLLER_MODULE.'/'.strtoupper($module_name).'/'.strtoupper($page_name);
+                require CONTROLLER_MODULE.'/'.$module_name.'Page/'.$page_name.'Page.class.php';
                 if(function_exists($ajaxMethodName)) {
                     call_user_func($ajaxMethodName);
                     exit;
