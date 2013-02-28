@@ -7,8 +7,7 @@
 */
 require_once __FILE__.'../Config/PageConfig.inc.php'
 
-class Page
- {
+class Page{
     //整合后模板页储存位置。
     private $renderedPage;
     //输出PHP页面私有方法。
