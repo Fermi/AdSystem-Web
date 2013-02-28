@@ -1,5 +1,5 @@
 <?php
-require_once dirname(dirname(dirname(__FILE__))).'Config/Config.inc.php';
+require_once dirname(dirname(dirname(__FILE__))).'/Config/Config.inc.php';
 
 //Dir.
 define("BASE_TEMPLATE_DIR",ROOT_DIR.'/Templates');
