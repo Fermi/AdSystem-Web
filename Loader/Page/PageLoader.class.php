@@ -5,7 +5,7 @@
 * Description: 页面控制器的加载基类文件。
 * Date:     Dec 17,2012
 */
-require_once dirname(dirname(__FILE__)).'/Config/PageLoaderConfig.inc.php';
+require_once dirname(dirname(__FILE__)).'/Config/PageLoaderConfig.php';
 class PageLoader{
     //指定默认方法名。
     private $loadMethodName = 'initPage';
