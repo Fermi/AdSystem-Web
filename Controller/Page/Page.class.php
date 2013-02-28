@@ -5,9 +5,9 @@
 * Description: 渲染PHP页面模板的控制器基类文件。
 * Date:     Dec 10,2012
 */
-require_once __FILE__.'../Config/PageConfig.inc.php'
+require_once __FILE__.'../Config/PageConfig.inc.php';
 
-class Page{
+class Page {
     //整合后模板页储存位置。
     private $renderedPage;
     //输出PHP页面私有方法。
