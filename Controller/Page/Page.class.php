@@ -10,7 +10,7 @@ require_once __FILE__.'../Config/PageConfig.inc.php'
 class Page
  {
     //整合后模板页储存位置。
-    private renderedPage;
+    private $renderedPage;
     //输出PHP页面私有方法。
     public function renderPage($templateIdentifier,$params = array()){
         if ((!defined("TEMPLATES_DIR"))&&(!defined("BASE_TEMPLATES_DIR"))){
