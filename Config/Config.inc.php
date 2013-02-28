@@ -10,7 +10,9 @@ define("LOADER_MODULE",ROOT_DIR.'/Loader');
 define("TOOL_MODULE",ROOT_DIR.'/Tool');
 define("DATA_MODULE",ROOT_DIR.'/Data');
 
-
+//Switch.
+define('IS_DEBUG',1);
+#define('IS_PRODUCT',1);
 //Options.
 //Database.
 define("DATABASE_NOT_POOL",1);
