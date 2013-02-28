@@ -1,3 +1,3 @@
-rewrite ^$ /Lander/Page/IndexLander.php?module_name=Index&page_name=Index last;
+rewrite ^/$ /Lander/Page/IndexLander.php?module_name=Index&page_name=Index last;
 
 
