@@ -18,8 +18,8 @@ class PageLoader{
         }else{
             if(defined("CONTROLLER_MODULE")){
                 require CONTROLLER_MODULE.'/'.$module_name.'Page/'.$page_name.'Page.class.php';
-                if (method_exists($page_name,$this->loadMethodName)) {
-                    call_user_func($page_name.'::'.$this->loadMethodName);
+                if (method_exists($page_name.'Page',$this->loadMethodName)) {
+                    call_user_func($page_name.'Page::'.$this->loadMethodName);
                     exit;
                 } else {
                     echo "加载页面的方法不存在";
@@ -39,8 +39,8 @@ class PageLoader{
         }else{
             if(defined("CONTROLLER_MODULE")) {
                 require CONTROLLER_MODULE.'/'.$module_name.'Page/'.$page_name.'Page.class.php';
-                if(method_exists($page_name,$this->ajaxMethodName)) {
-                    call_user_func($page_name.'::'.$this->ajaxMethodName);
+                if(method_exists($page_name.'Page',$this->ajaxMethodName)) {
+                    call_user_func($page_name.'Page::'.$this->ajaxMethodName);
                     exit;
                 } else {
                     echo "加载页面的方法不存在";
