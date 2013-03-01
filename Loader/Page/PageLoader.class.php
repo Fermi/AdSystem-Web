@@ -19,7 +19,8 @@ class PageLoader{
             if(defined("CONTROLLER_MODULE")){
                 require CONTROLLER_MODULE.'/'.$module_name.'Page/'.$page_name.'Page.class.php';
                 if (method_exists($page_name.'Page',$this->loadMethodName)) {
-                    $page_obj = new $page_name.'Page()';
+                    $page_class_name = $page_name.'Page';
+                    $page_obj = new $page_class_name;
                     call_user_func(array($page_obj,$this->loadMethodName));
                     exit;
                 } else {
@@ -41,7 +42,8 @@ class PageLoader{
             if(defined("CONTROLLER_MODULE")) {
                 require CONTROLLER_MODULE.'/'.$module_name.'Page/'.$page_name.'Page.class.php';
                 if(method_exists($page_name.'Page',$this->ajaxMethodName)) {
-                    $page_obj = new $page_name.'Page()';
+                    $page_class_name = $page_name.'Page';
+                    $page_obj = new $page_class_name;
                     call_user_func(array($page_obj,$this->ajaxMethodName));
                     exit;
                 } else {
