@@ -32,6 +32,7 @@ class Page {
         }
     } 
     //加载PHP页面脚本私有方法。
+    //本方法一般用于加载页面非组件的JS.
     public function loadScript($scriptIdentifier,$params = array()){
         if ((!defined("SCRIPTS_DIR"))&&(!defined("BASE_SCRIPTS_DIR"))){
             echo "Undefined 'SCRIPTS_DIR'";
@@ -54,10 +55,36 @@ class Page {
             return $renderResult;
         }
     }
-    //加载插件控制格式化输出文本私有方法。
-    //本方法区别于loadScript方法用return做返回值的原因是，本方法一般不在页面模板里调用。
-    //本方法用于生成特定代码并传递给模板等加载。
-    public function formatHelper($pluginIdentifier,$params = array()){
+    //加载PHP页面组件脚本私有方法.
+    //组件分三个部分,CSS在页面头引入,DIV在相应位置加入,JS脚本通过本方法加入.
+    public function loadWidget($widgetIdentifier,$params = array(),$divId){
+        if((!defined("WIDGETS_DIR"))&&(!defined("BASE_WIDGETS_DIR"))){
+            echo "Undefined 'WIDGETS_DIR'";
+            exit;
+        } else {
+            if(isset($params)){
+                extract($params);
+            }
+            if(defined("WIDGETS_DIR")){
+                $renderDir = WIDGETS_DIR.$widgetIdentifier;
+            }else if (defined("BASE_WIDGETS_DIR")){
+                $renderDir = BASE_WIDGETS_DIR.$widgetIdentifier
+            }
+            $renderFile = file_get_contents($renderDir);
+            $excute = '$renderResult = '.$renderFile.';';
+
+            @eval($excute);
+
+            if(isset($divId)){
+                return '$("#'.$divId.'").html('.$renderResult.')';
+            } else {
+                return $renderResult;
+            }
+        }
+    }
+    //加载插件私有方法。
+    //本方法一般用于生成特定代码并传递给模板等加载。也可用来格式化某些特殊输出样式.
+    public function loadPlugin($pluginIdentifier,$params = array()){
         if ((!defined("PLUGINS_DIR"))&&(!defined("BASE_PLUGINS_DIR"))){
             echo "Undefined 'PLUGINS_DIR'";
             exit;
