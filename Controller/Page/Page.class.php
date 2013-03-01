@@ -79,12 +79,12 @@ class Page {
          }
     }
     //继承控制器基类的控制器类需要覆盖的默认调用方法。
-    //public function initPage(){
+    //public static function initPage(){
        //$this->renderPage();
        //exit;
     //}
     //继承控制器基类的控制器类需要覆盖的AJAX调用方法。
-    //public function ajaxPage(){
+    //public static function ajaxPage(){
         //$this->renderPage();
         //exit;
     //}
