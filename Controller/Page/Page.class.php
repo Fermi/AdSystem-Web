@@ -68,7 +68,7 @@ class Page {
             if(defined("WIDGETS_DIR")){
                 $renderDir = WIDGETS_DIR.$widgetIdentifier;
             }else if (defined("BASE_WIDGETS_DIR")){
-                $renderDir = BASE_WIDGETS_DIR.$widgetIdentifier
+                $renderDir = BASE_WIDGETS_DIR.$widgetIdentifier;
             }
             $renderFile = file_get_contents($renderDir);
             $excute = '$renderResult = '.$renderFile.';';
