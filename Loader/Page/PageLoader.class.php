@@ -8,8 +8,8 @@
 require_once dirname(dirname(__FILE__)).'/Config/PageLoaderConfig.php';
 class PageLoader{
     //指定默认方法名。
-    private $loadMethodName = 'initPage';
-    private $ajaxMethodName = 'ajaxPage';
+    private $_loadMethodName = 'initPage';
+    private $_ajaxMethodName = 'ajaxPage';
     //公用加载页面方法。
     public function LoadPage($module_name,$page_name){
         if(empty($module_name)||empty($page_name)){
@@ -18,10 +18,10 @@ class PageLoader{
         }else{
             if(defined("CONTROLLER_MODULE")){
                 require CONTROLLER_MODULE.'/'.$module_name.'Page/'.$page_name.'Page.class.php';
-                if (method_exists($page_name.'Page',$this->loadMethodName)) {
+                if (method_exists($page_name.'Page',$this->_loadMethodName)) {
                     $page_class_name = $page_name.'Page';
                     $page_obj = new $page_class_name;
-                    call_user_func(array($page_obj,$this->loadMethodName));
+                    call_user_func(array($page_obj,$this->_loadMethodName));
                     exit;
                 } else {
                     echo "加载页面的方法不存在";
@@ -41,10 +41,10 @@ class PageLoader{
         }else{
             if(defined("CONTROLLER_MODULE")) {
                 require CONTROLLER_MODULE.'/'.$module_name.'Page/'.$page_name.'Page.class.php';
-                if(method_exists($page_name.'Page',$this->ajaxMethodName)) {
+                if(method_exists($page_name.'Page',$this->_ajaxMethodName)) {
                     $page_class_name = $page_name.'Page';
                     $page_obj = new $page_class_name;
-                    call_user_func(array($page_obj,$this->ajaxMethodName));
+                    call_user_func(array($page_obj,$this->_ajaxMethodName));
                     exit;
                 } else {
                     echo "加载页面的方法不存在";

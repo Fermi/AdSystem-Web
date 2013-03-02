@@ -9,25 +9,22 @@ require_once dirname(dirname(__FILE__)).'/Config/PageConfig.php';
 
 class Page {
     //整合后模板页储存位置。
-    private $renderedPage;
+    private $_renderedPage;
     //输出PHP页面私有方法。
     public function renderPage($templateIdentifier,$params = array()){
         if ((!defined("TEMPLATES_DIR"))&&(!defined("BASE_TEMPLATES_DIR"))){
             echo "Undefined 'TEMPLATES_DIR'";
             exit;
         } else {
-            if (isset($params)){
-                extract($params);
-            }
             if(defined("TEMPLATES_DIR")){
                 $renderDir = TEMPLATES_DIR.$templateIdentifier;
             }else if (defined("BASE_TEMPLATES_DIR")){
                 $renderDir = BASE_TEMPLATES_DIR.$templateIdentifier;
             }
 
-            $this->renderedPage = file_get_contents($renderDir);
+            $this->_renderedPage = file_get_contents($renderDir);
             
-            echo $this->renderedPage;
+            echo php_template_engine_load_page($this,$this->_renderedPage,$params);
             exit;
         }
     } 
@@ -38,9 +35,6 @@ class Page {
             echo "Undefined 'SCRIPTS_DIR'";
             exit;
         } else {
-            if (isset($params)){
-                extract($params);
-            }
             if(defined("SCRIPTS_DIR")){
                 $renderDir = SCRIPTS_DIR.$scriptIdentifier;
             }else if (defined("BASE_SCRIPTS_DIR")){
@@ -48,11 +42,8 @@ class Page {
             }
             
             $renderFile = file_get_contents($renderDir);
-            $excute = '$renderResult = '.$renderFile.';';
 
-            @eval($excute);
-
-            return $renderResult;
+            return php_template_engine_load_script($renderFile,$params);
         }
     }
     //加载PHP页面组件脚本私有方法.
@@ -62,18 +53,13 @@ class Page {
             echo "Undefined 'WIDGETS_DIR'";
             exit;
         } else {
-            if(isset($params)){
-                extract($params);
-            }
             if(defined("WIDGETS_DIR")){
                 $renderDir = WIDGETS_DIR.$widgetIdentifier;
             }else if (defined("BASE_WIDGETS_DIR")){
                 $renderDir = BASE_WIDGETS_DIR.$widgetIdentifier;
             }
             $renderFile = file_get_contents($renderDir);
-            $excute = '$renderResult = '.$renderFile.';';
-
-            @eval($excute);
+            $renderResult = php_template_engine_load_script($renderFile,$params);
 
             if(isset($divId)){
                 return '$("#'.$divId.'").html('.$renderResult.')';
@@ -89,20 +75,14 @@ class Page {
             echo "Undefined 'PLUGINS_DIR'";
             exit;
         } else {
-            if (isset($params)){
-                extract($params);
-            }
             if(defined("PLUGINS_DIR")){
                 $renderDir = PLUGINS_DIR.$pluginIdentifier;
             }else if(defined("BASE_PLUGINS_DIR")){
                 $renderDir = BASE_PLUGINS_DIR.$pluginIdentifier;
             }
             $renderFile = file_get_contents($renderDir);
-            $excute = '$renderResult = '.$renderFile.';';
-
-            @eval($excute);
             
-            return $renderResult;
+            return php_template_engine_load_plugin($renderFile,$params);
          }
     }
     //继承控制器基类的控制器类需要覆盖的默认调用方法。
