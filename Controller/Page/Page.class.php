@@ -24,7 +24,7 @@ class Page {
 
             $this->_renderedPage = file_get_contents($renderDir);
             
-            echo php_template_engine_load_page($this,$this->_renderedPage,$params);
+            echo php_output_render_format($this,$this->_renderedPage,$params);
             exit;
         }
     } 
@@ -43,7 +43,7 @@ class Page {
             
             $renderFile = file_get_contents($renderDir);
 
-            return php_template_engine_load_script($renderFile,$params);
+            return php_output_render_format($this,$renderFile,$params);
         }
     }
     //加载PHP页面组件脚本私有方法.
@@ -59,7 +59,7 @@ class Page {
                 $renderDir = BASE_WIDGETS_DIR.$widgetIdentifier;
             }
             $renderFile = file_get_contents($renderDir);
-            $renderResult = php_template_engine_load_script($renderFile,$params);
+            $renderResult = php_output_render_format($this,$renderFile,$params);
 
             if(isset($divId)){
                 return '$("#'.$divId.'").html('.$renderResult.')';
@@ -82,7 +82,7 @@ class Page {
             }
             $renderFile = file_get_contents($renderDir);
             
-            return php_template_engine_load_plugin($renderFile,$params);
+            return php_output_render_format($this,$renderFile,$params);
          }
     }
     //继承控制器基类的控制器类需要覆盖的默认调用方法。
