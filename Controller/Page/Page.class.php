@@ -26,7 +26,7 @@ class Page {
             }
 
             $this->_renderedPage = file_get_contents($renderDir); 
-            @eval('?>'."\$renderResult = \"".$this->_renderPage."\";".'<?php');
+            @eval('?>'."\$renderResult = \"".$this->_renderedPage."\";".'<?php');
 
             echo $renderResult;
             exit;
