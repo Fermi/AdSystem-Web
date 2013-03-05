@@ -26,7 +26,7 @@ class Page {
             }
 
             $this->_renderedPage = file_get_contents($renderDir); 
-            $renderResult = @eval('?>'."\$renderResult = \"".$this->_renderPage."\";".'<?php');
+            @eval('?>'."\$renderResult = \"".$this->_renderPage."\";".'<?php');
 
             echo $renderResult;
             exit;
@@ -71,7 +71,7 @@ class Page {
                 $renderDir = BASE_WIDGETS_DIR.$widgetIdentifier;
             }
             $renderFile = file_get_contents($renderDir);
-            $renderResult = @eval('?>'."\$renderResult = \"".$renderFile."\";".'<?php');
+            @eval('?>'."\$renderResult = \"".$renderFile."\";".'<?php');
 
             if(isset($divId)){
                 return '$("#'.$divId.'").html('.$renderResult.')';
