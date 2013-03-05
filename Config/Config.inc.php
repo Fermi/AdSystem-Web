@@ -9,7 +9,7 @@ define("LANDER_MODULE",ROOT_DIR.'/Lander');
 define("LOADER_MODULE",ROOT_DIR.'/Loader');
 define("TOOL_MODULE",ROOT_DIR.'/Tool');
 define("DATA_MODULE",ROOT_DIR.'/Data');
-define("EXTENTION_MODULE",ROOT_DIR.'/Extention');
+define("EXTENSION_MODULE",ROOT_DIR.'/Extension');
 
 //Switch.
 define("IS_DEBUG",1);
