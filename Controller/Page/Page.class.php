@@ -12,14 +12,10 @@ class Page {
     private $_renderedPage;
     //输出PHP页面私有方法。
     public function renderPage($templateIdentifier,$params){
-        $renderResult = '';
         if ((!defined("TEMPLATES_DIR"))&&(!defined("BASE_TEMPLATES_DIR"))){
             echo "Undefined 'TEMPLATES_DIR'";
             exit;
         } else {
-            if(isset($params)){
-                extract($params);
-            }
             if(defined("TEMPLATES_DIR")){
                 $renderDir = TEMPLATES_DIR.$templateIdentifier;
             }else if (defined("BASE_TEMPLATES_DIR")){
@@ -27,23 +23,18 @@ class Page {
             }
 
             $this->_renderedPage = file_get_contents($renderDir); 
-            @eval('?>'."\$renderResult = \"".$this->_renderedPage."\";".'<?php');
 
-            echo $renderResult;
+            echo php_template_parser_pause($this,$this->_renderedPage,$params);
             exit;
         }
     } 
     //加载PHP页面脚本私有方法。
     //本方法一般用于加载页面非组件的JS.
     public function loadScript($scriptIdentifier,$params){
-        $renderResult = '';
         if ((!defined("SCRIPTS_DIR"))&&(!defined("BASE_SCRIPTS_DIR"))){
             echo "Undefined 'SCRIPTS_DIR'";
             exit;
         } else {
-            if(isset($params)){
-                extract($params);
-            }
             if(defined("SCRIPTS_DIR")){
                 $renderDir = SCRIPTS_DIR.$scriptIdentifier;
             }else if (defined("BASE_SCRIPTS_DIR")){
@@ -52,7 +43,7 @@ class Page {
             
             $renderFile = file_get_contents($renderDir);
 
-            @eval('?>'."\$renderResult = \"".$renderFile."\";".'<?php');
+            $renderResult = php_template_parser_pause($this,$renderFile,$params);
 
             return $renderResult;
         }
@@ -60,21 +51,17 @@ class Page {
     //加载PHP页面组件脚本私有方法.
     //组件分三个部分,CSS在页面头引入,DIV在相应位置加入,JS脚本通过本方法加入.
     public function loadWidget($widgetIdentifier,$params,$divId){
-        $renderResult = '';
         if((!defined("WIDGETS_DIR"))&&(!defined("BASE_WIDGETS_DIR"))){
             echo "Undefined 'WIDGETS_DIR'";
             exit;
         } else {
-            if(isset($params)){
-                extract($params);
-            }
             if(defined("WIDGETS_DIR")){
                 $renderDir = WIDGETS_DIR.$widgetIdentifier;
             }else if (defined("BASE_WIDGETS_DIR")){
                 $renderDir = BASE_WIDGETS_DIR.$widgetIdentifier;
             }
             $renderFile = file_get_contents($renderDir);
-            @eval('?>'."\$renderResult = \"".$renderFile."\";".'<?php');
+            $renderResult = php_template_parser_pause($this.$renderFile,$params);
 
             if(isset($divId)){
                 return '$("#'.$divId.'").html('.$renderResult.')';
@@ -86,14 +73,10 @@ class Page {
     //加载插件私有方法。
     //本方法一般用于生成特定代码并传递给模板等加载。也可用来格式化某些特殊输出样式.
     public function loadPlugin($pluginIdentifier,$params){
-        $renderResult = '';
         if ((!defined("PLUGINS_DIR"))&&(!defined("BASE_PLUGINS_DIR"))){
             echo "Undefined 'PLUGINS_DIR'";
             exit;
         } else {
-            if(isset($params)){
-                extract($params);
-            }
             if(defined("PLUGINS_DIR")){
                 $renderDir = PLUGINS_DIR.$pluginIdentifier;
             }else if(defined("BASE_PLUGINS_DIR")){
@@ -101,7 +84,7 @@ class Page {
             }
             $renderFile = file_get_contents($renderDir);
             
-            @eval('?>'."\$renderResult = \"".$renderFile."\";".'<?php');
+            $renderResult = php_template_parser_pause($this,$renderFile,$params);
 
             return $renderResult;
          }
