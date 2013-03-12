@@ -24,7 +24,7 @@ class Page {
 
             $this->_renderedPage = file_get_contents($renderDir); 
 
-            echo php_template_parser_pause($this,$this->_renderedPage,$params);
+            echo template_parser_pause($this,$this->_renderedPage,$params);
             exit;
         }
     } 
@@ -43,7 +43,7 @@ class Page {
             
             $renderFile = file_get_contents($renderDir);
 
-            $renderResult = php_template_parser_pause($this,$renderFile,$params);
+            $renderResult = template_parser_pause($this,$renderFile,$params);
 
             return $renderResult;
         }
@@ -61,7 +61,7 @@ class Page {
                 $renderDir = BASE_WIDGETS_DIR.$widgetIdentifier;
             }
             $renderFile = file_get_contents($renderDir);
-            $renderResult = php_template_parser_pause($this.$renderFile,$params);
+            $renderResult = template_parser_pause($this.$renderFile,$params);
 
             if(isset($divId)){
                 return '$("#'.$divId.'").html('.$renderResult.')';
@@ -84,7 +84,7 @@ class Page {
             }
             $renderFile = file_get_contents($renderDir);
             
-            $renderResult = php_template_parser_pause($this,$renderFile,$params);
+            $renderResult = template_parser_pause($this,$renderFile,$params);
 
             return $renderResult;
          }
