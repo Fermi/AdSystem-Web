@@ -25,4 +25,8 @@ class FileDownloader{
         }
 
     }
+
+    public function getFileNames($filter){
+        
+    }
 }      
