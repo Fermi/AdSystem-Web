@@ -27,6 +27,30 @@ class FileDownloader{
     }
 
     public function getFileNames($filter){
-        
+        if(!empty($filter)){
+            $file_path = FILE_PREFIX.$filter;
+        } else {
+            $file_path = FILE_PREFIX;
+        }
+
+        $result_array = array();
+
+        if($dp = opendir($file_path)){
+            while(($file_handle = readdir($file_path)) !== false){
+                if(is_file($file_handle)){
+                    $result_array[] = $file_handle;
+                } else {
+                    continue;
+                }
+            }
+
+            if(!empty($result_array)){
+                return json_encode(array("filter"=>$filter,"result"=>$result_array));
+            } else {
+                return json_encode(array("Error"=>"No files found!"));
+            }
+        } else {
+            return json_encode(array("Error"=>"Dir could not found!"));
+        }
     }
 }      
