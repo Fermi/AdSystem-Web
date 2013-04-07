@@ -10,5 +10,6 @@ if(ParamManager::getGet("File")){
     $file = ParamManager::getGet("File");
 }
 
-new FileUploader->receiveFiles($file,$filter);
-
+if($file||$filter){
+    new FileUploader->receiveFiles($file,$filter);
+}
