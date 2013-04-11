@@ -26,7 +26,7 @@ class FileDownloader{
 
     }
 
-    public function getFileNames($filter){
+    public function searchFileNames($filter){
         if(!empty($filter)){
             $file_path = FILE_PREFIX.$filter;
         } else {
