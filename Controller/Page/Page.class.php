@@ -8,8 +8,6 @@
 require_once dirname(dirname(__FILE__)).'/Config/PageConfig.php';
 
 class Page {
-    //整合后模板页储存位置。
-    private $_renderedPage;
     //输出PHP页面私有方法。
     public function renderPage($templateIdentifier,$params){
         if ((!defined("TEMPLATES_DIR"))&&(!defined("BASE_TEMPLATES_DIR"))){
@@ -20,11 +18,9 @@ class Page {
                 $renderDir = TEMPLATES_DIR.$templateIdentifier;
             }else if (defined("BASE_TEMPLATES_DIR")){
                 $renderDir = BASE_TEMPLATES_DIR.$templateIdentifier;
-            }
+            } 
 
-            $this->_renderedPage = file_get_contents($renderDir);
-
-            echo template_parser_pause($this,$this->_renderedPage,$params);
+            echo template_parser_pause($this,$renderDir,$params);
             exit;
         }
     } 
@@ -40,10 +36,8 @@ class Page {
             }else if (defined("BASE_SCRIPTS_DIR")){
                 $renderDir = BASE_SCRIPTS_DIR.$scriptIdentifier;
             }
-            
-            $renderFile = file_get_contents($renderDir);
 
-            $renderResult = template_parser_pause($this,$renderFile,$params);
+            $renderResult = template_parser_pause($this,$renderDir,$params);
 
             return $renderResult;
         }
@@ -60,8 +54,8 @@ class Page {
             }else if (defined("BASE_WIDGETS_DIR")){
                 $renderDir = BASE_WIDGETS_DIR.$widgetIdentifier;
             }
-            $renderFile = file_get_contents($renderDir);
-            $renderResult = template_parser_pause($this.$renderFile,$params);
+            
+            $renderResult = template_parser_pause($this.$renderDir,$params);
 
             if(isset($divId)){
                 return '$("#'.$divId.'").html('.$renderResult.')';
@@ -82,9 +76,8 @@ class Page {
             }else if(defined("BASE_PLUGINS_DIR")){
                 $renderDir = BASE_PLUGINS_DIR.$pluginIdentifier;
             }
-            $renderFile = file_get_contents($renderDir);
             
-            $renderResult = template_parser_pause($this,$renderFile,$params);
+            $renderResult = template_parser_pause($this,$renderDir,$params);
 
             return $renderResult;
          }
