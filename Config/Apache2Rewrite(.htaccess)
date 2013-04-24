@@ -1,0 +1,3 @@
+RewriteEngine On
+
+RewriteRule ^$ /Lander/Page/IndexLander.php?module_name=Index&page_name=Index [L]

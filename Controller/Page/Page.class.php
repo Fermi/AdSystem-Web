@@ -22,7 +22,7 @@ class Page {
                 $renderDir = BASE_TEMPLATES_DIR.$templateIdentifier;
             }
 
-            $this->_renderedPage = file_get_contents($renderDir); 
+            $this->_renderedPage = file_get_contents($renderDir);
 
             echo template_parser_pause($this,$this->_renderedPage,$params);
             exit;
