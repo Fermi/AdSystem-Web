@@ -14,7 +14,7 @@ class MysqliQuery{
         $key_string = implode(',',$keyarray);
         $value_string = implode(',',$valuearray);
 
-        $sql = 'INSERT INTO {$table} ( {$key_string} ) VALUES ( {$value_string} )';
+        $sql = 'INSERT INTO '.$table.' ( '.$key_string.' ) VALUES ( '.$value_string.' )';
         
         return $sql;
     }  
