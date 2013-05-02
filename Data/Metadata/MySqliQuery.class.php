@@ -17,7 +17,7 @@ class MysqliQuery{
         $sql = 'INSERT INTO {$table} ( {$key_string} ) VALUES ( {$value_string} )';
         
         return $sql;
-    } 
+    }  
     public static function formatSelectSqlQuery($table,$keyarray,$wherearray,$orderarray,$grouparray,$limit){
         if(empty($table)){
             echo "未指定数据表名";
@@ -31,21 +31,21 @@ class MysqliQuery{
             $key_count = 0;
             foreach($keyarray as $ky){
                 $sql .= '`'.$ky.'`';
-                if($key_count < $key_array_count){
+                if($key_count < $key_array_count-1){
                     $sql .= ',';
-                    $count ++;
                 }
+                $key_count++;
             }
         } else {
             $sql .= ' * ';
         }
-        $sql .= ' FROM {$table} ';
-        $sql .= $this->_formatWhereSql($wherearray);
-        $sql .= $this->_formatOrderBySql($orderarray);
-        $sql .= $this->_formatGroupBySql($grouparray);
+        $sql .= ' FROM '.$table ;
+        $sql .= self::_formatWhereSql($wherearray);
+        $sql .= self::_formatOrderBySql($orderarray);
+        $sql .= self::_formatGroupBySql($grouparray);
         if(isset($limit)){
             if(is_array($limit)){
-                $sql .= 'LIMIT'.$limit['down'].','$limit['up'];
+                $sql .= 'LIMIT'.$limit['down'].','.$limit['up'];
             } else {
                 $sql .= ' LIMIT '.$limit;
             }
@@ -64,13 +64,18 @@ class MysqliQuery{
 
         $array_count = count($keyarray);
 
-        for($count = 0;$count < $array_count,$count ++){
-            $str_tmp .= '`'.$keyarray[$count].'`='.$valuearray[$count].',';
+        for($count = 0;$count < $array_count;$count ++){
+            $str_tmp .= '`'.$keyarray[$count].'`='.$valuearray[$count];
+
+            if($count < $array_count-1){
+                $str_tmp .= ', ';
+            }
+            $count++;
         }
 
-        $sql = 'UPDATE {$table} SET '.$str_tmp;
-        $sql .= $this->_formatWhereSql($wherearray);
-        if(isset($limit)){
+        $sql = 'UPDATE '.$table.' SET '.$str_tmp;
+        $sql .= self::_formatWhereSql($wherearray);
+        if(!empty($limit)){
             if(is_array($limit)){
                 $sql .= 'LIMIT '.$limit['down'].','.$limit['up'];
             } else {
@@ -86,9 +91,9 @@ class MysqliQuery{
             return null;
         }
         
-        $sql = 'DELETE FROM {$table}';
-        $sql .= $this->_formatWhereSql($wherearray);
-        if(isset($limit)){
+        $sql = 'DELETE FROM '.$table;
+        $sql .= self::_formatWhereSql($wherearray);
+        if(!empty($limit)){
             if(is_array($limit)){
                 $sql .= ' LIMIT '.$limit['down'].','.$limit['up'];
             } else {
@@ -98,9 +103,9 @@ class MysqliQuery{
         return $sql;
     }
 
-    private function _formatWhereSql($wherearray){
+    private static function _formatWhereSql($wherearray){
+        if(!empty($wherearray)){
         $where_str = ' WHERE ';
-        if(isset($wherearray)){
             $array_count = count($wherearray);
             $count = 0;
             foreach($wherearray as $wr){
@@ -132,10 +137,10 @@ class MysqliQuery{
                     default:
                         break;
                 }
-                if($count < $array_count){
+                if($count < $array_count-1){
                     $where_str .= ' AND ';
-                    $count ++;
                 }
+                $count++;
             } 
         } else{
             
@@ -144,9 +149,9 @@ class MysqliQuery{
         return $where_str;
     }
     
-    private function _formatOrderBySql($orderarray){
-        $order_str = ' ORDER BY ';
-        if(isset($orderarray)){
+    private static function _formatOrderBySql($orderarray){
+        if(!empty($orderarray)){
+            $order_str = ' ORDER BY ';
             $array_count = count($orderarray);
             $count = 0;
             foreach($orderarray as $or){
@@ -158,35 +163,35 @@ class MysqliQuery{
                         $order_str .= 'ASC';
                     }
                 }
-                if($count < $array_count){
+                if($count < $array_count-1){
                     $order_str .=', ';
-                    $count ++;
                 }
+                $count++;
             }
+
+            return $order_str;
         } else {
-            
+            return ' ';   
         }
-        
-        return $order_str;
     }
 
-    private function _formatGroupBySql($grouparray){
-        $group_str = ' GROUP BY ';
-        if(isset($grouparray)){
+    private static function _formatGroupBySql($grouparray){
+        if(!empty($grouparray)){
+            $group_str = ' GROUP BY ';
             $array_count = count($grouparray);
             $count = 0;
             foreach($grouparray as $gp) {
                 $group_str .= '`'.$gp['key'].'`';
-                if($count < $array_count){
+                if($count < $array_count-1){
                     $group_str .= ', ';
-                    $count ++;
                 }
             }
+
+            return $group_str;
         } else {
-            
+            return ' ';
         }
 
-        return $group_str;
     }
 }
 

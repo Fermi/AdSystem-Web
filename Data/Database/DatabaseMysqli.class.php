@@ -1,7 +1,7 @@
 <?php
 
 class DatabaseMysqli {
-    public static function connectDB($dbhost=DEFAULT_HOST,$dbport=DEFAULT_PORT,$dbname){
+    public static function connectDB($dbname,$dbport=DEFAULT_PORT,$dbhost=DEFAULT_HOST){
         if(isset($dbname)){
             return new mysqli($dbhost,DEFAULT_USER,DEFAULT_PASSWD,$dbname,$dbport);
         } else {
@@ -15,12 +15,20 @@ class DatabaseMysqli {
         }
         if(isset($sql)){
             $result_set = mysqli_query($dbconn,$sql->getSqlString());
-            if(defined('DEFAULT_RESULT_STYLE_ARRAY')){
-                $result = mysqli_fetch_array($result_set);
+            if($result_set === false){
+                return null;
             } else {
-                $result = mysqli_fetch_object($result_set);
-            }
-            return $result;
+                if(defined('DEFAULT_RESULT_STYLE_ARRAY')){
+                    while($result_row = mysqli_fetch_assoc($result_set)){
+                        $result[] = $result_row;
+                    }
+                } else {
+                    while($result_row = mysqli_fetch_object($result_set)){
+                        $result[] = $result_row;
+                    }
+                }
+                return $result;
+            } 
         } else{
             return null;
         }
@@ -34,12 +42,16 @@ class DatabaseMysqli {
         if(isset($sqlarray)&&is_array($sqlarray)){
             foreach($sqlarray as $sql){
                 $result_set = mysqli_query($dbconn,$sql->getSqlString());
-                if(defined('DEFAULT_RESULT_STYLE_ARRAY')){
-                    $tmp_result = mysqli_fetch_array($result_set);
+                if($result_set === false){
+                    $result[] = null;
                 } else {
-                    $tmp_result = mysqli_fetch_object($result_set);
+                    if(defined('DEFAULT_RESULT_STYLE_ARRAY')){
+                        $tmp_result = mysqli_fetch_array($result_set);
+                    } else {
+                        $tmp_result = mysqli_fetch_object($result_set);
+                    }
+                    $result[] = $tmp_result;
                 }
-                $result[] = $tmp_result;
             }
         } else {
             return null;
