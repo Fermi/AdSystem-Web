@@ -15,6 +15,7 @@ class DatabaseMysqli {
         }
         if(isset($sql)){
             $result_set = mysqli_query($dbconn,$sql->getSqlString());
+            $result = array();
             if($result_set === false){
                 return null;
             } else {
