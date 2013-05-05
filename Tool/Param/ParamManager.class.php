@@ -38,27 +38,39 @@ class ParamManager{
 
         switch($method_type){
             case 'GET':
-                $temp = trim($_GET[$name]);
-                if (self::_identifyInvalid($temp)){
-                    $result = false;
+                if(!empty($_GET[$name])){
+                    $temp = trim($_GET[$name]);
+                    if (self::_identifyInvalid($temp)){
+                        $result = false;
+                    } else {
+                        $result = self::_convertParam($temp);
+                    }
                 } else {
-                    $result = self::_convertParam($temp);
+                    $result = false;
                 }
                 break;
             case 'POST':
-                $temp = trim($_POST[$name]);
-                if (self::_identifyInvalid($temp)){
-                    $result = false;
+                if(!empty($_POST[$name])){
+                    $temp = trim($_POST[$name]);
+                    if (self::_identifyInvalid($temp)){
+                        $result = false;
+                    } else {
+                        $result = self::_convertParam($temp);
+                    }
                 } else {
-                    $result = self::_convertParam($temp);
+                    $result = false;
                 }
                 break;
             case 'REQUEST':
-                $temp = trim($_REQUEST[$name]);
-                if (self::_identifyInvalid($temp)){
-                    $result = false;
+                if(!empty($_REQUEST[$name])){
+                    $temp = trim($_REQUEST[$name]);
+                    if (self::_identifyInvalid($temp)){
+                        $result = false;
+                    } else {
+                        $result = self::_convertParam($temp);
+                    }
                 } else {
-                    $result = self::_convertParam($temp);
+                    $result = false;
                 }
                 break;
             default:
