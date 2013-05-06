@@ -16,8 +16,8 @@ class DatabaseMysqli {
         if(isset($sql)){
             $result_set = mysqli_query($dbconn,$sql->getSqlString());
             $result = array();
-            if($result_set === false){
-                return null;
+            if(!is_array($result_set)){
+                return $result_set;
             } else {
                 if(defined('DEFAULT_RESULT_STYLE_ARRAY')){
                     while($result_row = mysqli_fetch_assoc($result_set)){
@@ -31,7 +31,7 @@ class DatabaseMysqli {
                 return $result;
             } 
         } else{
-            return null;
+            return false;
         }
     } 
     public static function executeDBQueryArray($dbconn,$sqlarray,$encoding){
