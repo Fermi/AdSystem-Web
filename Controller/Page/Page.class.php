@@ -18,9 +18,9 @@ class Page {
                 $renderDir = TEMPLATES_DIR.$templateIdentifier;
             }else if (defined("BASE_TEMPLATES_DIR")){
                 $renderDir = BASE_TEMPLATES_DIR.$templateIdentifier;
-            } 
-
-            echo template_parser_pause($this,$renderDir,$params);
+            }
+ 
+            echo template_parser_pause($this,$renderDir,$params,true);
             exit;
         }
     } 
@@ -37,14 +37,14 @@ class Page {
                 $renderDir = BASE_SCRIPTS_DIR.$scriptIdentifier;
             }
 
-            $renderResult = template_parser_pause($this,$renderDir,$params);
+            $renderResult = template_parser_pause($this,$renderDir,$params,true);
 
             return $renderResult;
         }
     }
     //加载PHP页面组件脚本私有方法.
     //组件分三个部分,CSS在页面头引入,DIV在相应位置加入,JS脚本通过本方法加入.
-    public function loadWidget($widgetIdentifier,$params,$divId){
+    public function loadWidgetDiv($widgetIdentifier,$params,&$widgetScriptParams,$divId = NULL){
         if((!defined("WIDGETS_DIR"))&&(!defined("BASE_WIDGETS_DIR"))){
             echo "Undefined 'WIDGETS_DIR'";
             exit;
@@ -54,12 +54,40 @@ class Page {
             }else if (defined("BASE_WIDGETS_DIR")){
                 $renderDir = BASE_WIDGETS_DIR.$widgetIdentifier;
             }
+        
+            $renderResult = template_parser_pause($renderDir,$params,true);
             
-            $renderResult = template_parser_pause($this.$renderDir,$params);
+            if(!empty($widgetScriptParams)){
+                $widgetScript = substr($widgetIdentifier,0,-3).'js';
+                $widgetScriptParams[] = $widgetScript;
+            }
 
             if(isset($divId)){
                 return '$("#'.$divId.'").html('.$renderResult.')';
             } else {
+                return $renderResult;
+            }
+        }
+    }
+    public function loadWidgetScript($widgetScriptParams,$params){
+        if((!defined("WIDGETS_DIR"))&&(!defined("BASE_WIDGETS_DIR"))){
+            echo "Undefined 'WIDGETS_DIR'";
+            exit;
+        } else {
+            if(empty($widgetScriptParams)){
+               echo "No Widget Added!"
+               exit;
+            } else {
+                foreach($widgetScriptParams)
+                    if(defined("WIDGETS_DIR")){
+                        $renderDir = WIDGETS_DIR.$widgetIdentifier;
+                    }else if (defined("BASE_WIDGETS_DIR")){
+                        $renderDir = BASE_WIDGETS_DIR.$widgetIdentifier;
+                    }
+        
+                    $Result = template_parser_pause($renderDir,$params,true);
+                    $renderResult = '<br/>'.$Result;
+                }
                 return $renderResult;
             }
         }
@@ -77,7 +105,7 @@ class Page {
                 $renderDir = BASE_PLUGINS_DIR.$pluginIdentifier;
             }
             
-            $renderResult = template_parser_pause($this,$renderDir,$params);
+            $renderResult = template_parser_pause($this,$renderDir,$params,true);
 
             return $renderResult;
          }
