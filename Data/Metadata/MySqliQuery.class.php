@@ -119,7 +119,7 @@ class MysqliQuery{
                     case 'LT':
                         $where_str .= '`'.$wr['key'].'`<'.$wr['value'];
                         break;
-                    case 'LT':
+                    case 'LE':
                         $where_str .= '`'.$wr['key'].'`<='.$wr['value'];
                         break;
                     case 'GT':
