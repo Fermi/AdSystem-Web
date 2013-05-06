@@ -10,10 +10,12 @@ class MysqliQuery{
         if(empty($keyarray)||empty($valuearray)){
             return null;
         }
-        
+       
+        $key_string = '';
         $key_string .= '`';
         $key_string .= implode('`,`',$keyarray);
         $key_string .= '`';
+        $value_string = '';
         $value_string .= '"';
         $value_string .= implode('","',$valuearray);
         $value_string .= '"';
