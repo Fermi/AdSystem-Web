@@ -11,8 +11,12 @@ class MysqliQuery{
             return null;
         }
         
-        $key_string = implode(',',$keyarray);
-        $value_string = implode(',',$valuearray);
+        $key_string .= '`';
+        $key_string = implode('`,`',$keyarray);
+        $key_string .= '`';
+        $value_string .= '"';
+        $value_string = implode('","',$valuearray);
+        $value_string .= '"';
 
         $sql = 'INSERT INTO '.$table.' ( '.$key_string.' ) VALUES ( '.$value_string.' )';
         
@@ -65,7 +69,7 @@ class MysqliQuery{
         $array_count = count($keyarray);
 
         for($count = 0;$count < $array_count;$count ++){
-            $str_tmp .= '`'.$keyarray[$count].'`='.$valuearray[$count];
+            $str_tmp .= '`'.$keyarray[$count].'`="'.$valuearray[$count].'"';
 
             if($count < $array_count-1){
                 $str_tmp .= ', ';
