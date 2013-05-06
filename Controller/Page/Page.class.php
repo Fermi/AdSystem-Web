@@ -75,19 +75,20 @@ class Page {
             exit;
         } else {
             if(empty($widgetScriptParams)){
-               echo "No Widget Added!"
+               echo "No Widget Added!";
                exit;
             } else {
-                foreach($widgetScriptParams)
+                foreach($widgetScriptParams as $param){
                     if(defined("WIDGETS_DIR")){
-                        $renderDir = WIDGETS_DIR.$widgetIdentifier;
+                        $renderDir = WIDGETS_DIR.$param;
                     }else if (defined("BASE_WIDGETS_DIR")){
-                        $renderDir = BASE_WIDGETS_DIR.$widgetIdentifier;
+                        $renderDir = BASE_WIDGETS_DIR.$param;
                     }
         
                     $Result = template_parser_pause($renderDir,$params,true);
                     $renderResult = '<br/>'.$Result;
                 }
+            
                 return $renderResult;
             }
         }
