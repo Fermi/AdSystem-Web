@@ -12,10 +12,10 @@ class MysqliQuery{
         }
         
         $key_string .= '`';
-        $key_string = implode('`,`',$keyarray);
+        $key_string .= implode('`,`',$keyarray);
         $key_string .= '`';
         $value_string .= '"';
-        $value_string = implode('","',$valuearray);
+        $value_string .= implode('","',$valuearray);
         $value_string .= '"';
 
         $sql = 'INSERT INTO '.$table.' ( '.$key_string.' ) VALUES ( '.$value_string.' )';
