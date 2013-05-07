@@ -135,10 +135,15 @@ class MysqliQuery{
                         $where_str .= '`'.$wr['key'].'`='.$wr['value'];
                         break;
                     case 'IN':
-                        foreach($wr['value'] as $ve){
-                            $str_tmp .= $ve.',';
+                        $str_tmp = '';
+                        if(is_array($wr['value'])){
+                            foreach($wr['value'] as $ve){
+                                $str_tmp .= '"'.$ve.'",';
+                            }
+                        } else {
+                            $str_tmp .='"'.$wr['value'].'",';
                         }
-                        $where_str .= 'IN ('.substr($str_tmp,0,-1).')';
+                        $where_str .= '`'.$wr['key'].'` IN ('.substr($str_tmp,0,-1).')';
                         break;
                     default:
                         break;
