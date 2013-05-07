@@ -152,12 +152,11 @@ class MysqliQuery{
                     $where_str .= ' AND ';
                 }
                 $count++;
-            } 
+            }
+            return $where_str;
         } else{
-            
+            return ' ';   
         }
-
-        return $where_str;
     }
     
     private static function _formatOrderBySql($orderarray){
