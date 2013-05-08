@@ -1,0 +1,32 @@
+.FileDownloader {
+    width:400px;
+    height:300px;
+}
+
+.FileDownloaderItem {
+    width:20px;
+    height:30px;
+}
+
+.FileDownloaderLabel {
+    width:20px;
+    height:30px;
+}
+
+.FileDownloaderButton {
+    width:20px;
+    height:30px;
+}
+
+.FileDownloader .FileDownloaderItem {
+    width:20px;
+    height:30px;
+}
+
+.FileDownloader .FileDownloaderItem .FileDownloaderLabel {
+    
+}
+
+.FileDownloader .FileDownloaderItem .FileDownloaderButton {
+    
+}

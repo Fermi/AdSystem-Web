@@ -1,0 +1,47 @@
+.FileUploader {
+    width:400px;
+    height:300px;
+}
+
+.FileUploaderItem {
+    width:100px;
+    height:50px;
+}
+
+.FileUploaderSelector {
+    width:50px;
+    height:50px;
+}
+.FileUploaderDeleteButton {
+    
+}
+.FileUploaderMoreButton {
+    width:10px;
+    height:10px;
+}
+
+.FileUploaderLabel {
+    width:20px;
+    height:50px;
+}
+.FileUploader .FileUploaderItem {
+    margin-top:10px;
+    width:30px;
+    height:30px;
+}
+
+.FileUploader .FileUploaderItem .FileUploaderSelector {
+    
+} 
+
+.FileUploader .FileUploaderItem .FileUploaderMoreButton {
+    
+}
+
+.FileUploader .FileUploaderItem .FileUploaderLabel {
+    
+}
+.FileUploader .FileUploaderItem .FileUploaderDeleteButton {
+    
+}
+

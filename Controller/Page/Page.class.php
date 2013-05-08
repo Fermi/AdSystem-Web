@@ -6,9 +6,21 @@
 * Date:     Dec 10,2012
 */
 require_once dirname(dirname(__FILE__)).'/Config/PageConfig.php';
+require_once BASE_WIDGETS_DIR.'WidgetManager/WidgetsManager.class.php';
+require_once BASE_PLUGINS_DIR.'PluginManager/PluginManager.class.php';
 
 class Page {
-    //输出PHP页面私有方法。
+    //私有变量
+    //页面里有的组件.
+    private $widgets;
+    private $plugins;
+
+    //构造方法.
+    public function __construct(){
+        $this->widgets = new WidgetManager();
+        $this->plugins = new PluginManager();
+    }
+    //输出PHP页面公有方法。
     public function renderPage($templateIdentifier,$params){
         if ((!defined("TEMPLATES_DIR"))&&(!defined("BASE_TEMPLATES_DIR"))){
             echo "Undefined 'TEMPLATES_DIR'";
@@ -20,12 +32,11 @@ class Page {
                 $renderDir = BASE_TEMPLATES_DIR.$templateIdentifier;
             }
  
-            echo template_parser_pause($this,$renderDir,$params,true);
-            exit;
+            echo template_parser_pause($this,$renderDir,$params);
         }
-    } 
-    //加载PHP页面脚本私有方法。
-    //本方法一般用于加载页面非组件的JS.
+    }  
+    //加载PHP页面脚本公有方法。
+    //本方法用于加载页面非组件的整合过的JS.
     public function loadScript($scriptIdentifier,$params){
         if ((!defined("SCRIPTS_DIR"))&&(!defined("BASE_SCRIPTS_DIR"))){
             echo "Undefined 'SCRIPTS_DIR'";
@@ -37,79 +48,35 @@ class Page {
                 $renderDir = BASE_SCRIPTS_DIR.$scriptIdentifier;
             }
 
-            $renderResult = template_parser_pause($this,$renderDir,$params,true);
+            $renderResult = template_parser_pause($this,$renderDir,$params);
 
-            return $renderResult;
+            echo $renderResult;
         }
     }
-    //加载PHP页面组件脚本私有方法.
-    //组件分三个部分,CSS在页面头引入,DIV在相应位置加入,JS脚本通过本方法加入.
-    public function loadWidgetDiv($widgetIdentifier,$params,&$widgetScriptParams,$divId = NULL){
-        if((!defined("WIDGETS_DIR"))&&(!defined("BASE_WIDGETS_DIR"))){
-            echo "Undefined 'WIDGETS_DIR'";
-            exit;
-        } else {
-            if(defined("WIDGETS_DIR")){
-                $renderDir = WIDGETS_DIR.$widgetIdentifier;
-            }else if (defined("BASE_WIDGETS_DIR")){
-                $renderDir = BASE_WIDGETS_DIR.$widgetIdentifier;
-            }
-        
-            $renderResult = template_parser_pause($renderDir,$params,true);
-            
-            if(!empty($widgetScriptParams)){
-                $widgetScript = substr($widgetIdentifier,0,-3).'js';
-                $widgetScriptParams[] = $widgetScript;
-            }
-
-            if(isset($divId)){
-                return '$("#'.$divId.'").html('.$renderResult.')';
-            } else {
-                return $renderResult;
-            }
-        }
+    
+    //控制器中注册控件.
+    public function registWidget($name,$params){
+        return $widgets->regist($name,$params);
     }
-    public function loadWidgetScript($widgetScriptParams,$params){
-        if((!defined("WIDGETS_DIR"))&&(!defined("BASE_WIDGETS_DIR"))){
-            echo "Undefined 'WIDGETS_DIR'";
-            exit;
-        } else {
-            if(empty($widgetScriptParams)){
-               echo "No Widget Added!";
-               exit;
-            } else {
-                foreach($widgetScriptParams as $param){
-                    if(defined("WIDGETS_DIR")){
-                        $renderDir = WIDGETS_DIR.$param;
-                    }else if (defined("BASE_WIDGETS_DIR")){
-                        $renderDir = BASE_WIDGETS_DIR.$param;
-                    }
-        
-                    $Result = template_parser_pause($renderDir,$params,true);
-                    $renderResult = '<br/>'.$Result;
-                }
-            
-                return $renderResult;
-            }
-        }
+    //页面导出控件css.
+    public function exportWidgetCss(){
+        echo $widgets->getStyles();
     }
-    //加载插件私有方法。
-    //本方法一般用于生成特定代码并传递给模板等加载。也可用来格式化某些特殊输出样式.
-    public function loadPlugin($pluginIdentifier,$params){
-        if ((!defined("PLUGINS_DIR"))&&(!defined("BASE_PLUGINS_DIR"))){
-            echo "Undefined 'PLUGINS_DIR'";
-            exit;
-        } else {
-            if(defined("PLUGINS_DIR")){
-                $renderDir = PLUGINS_DIR.$pluginIdentifier;
-            }else if(defined("BASE_PLUGINS_DIR")){
-                $renderDir = BASE_PLUGINS_DIR.$pluginIdentifier;
-            }
-            
-            $renderResult = template_parser_pause($this,$renderDir,$params,true);
-
-            return $renderResult;
-         }
+    //页面导出控件div.
+    public function exportWidgetTemplate($name){
+        echo $widgets->getTemplate($name);
+    }
+    //页面导出控件JS.
+    public function exportWidgetScript(){
+        echo $widgets->getScripts();
+    }
+    //控制器中注册插件.
+    public function registPlugin($name,$params){
+        return $plugins->regist($name,$params);
+    }
+    //页面导出插件结果.
+    public function exportPluginResult($name){
+        echo $plugins->getResult($name);
     }
     //继承控制器基类的控制器类需要覆盖的默认调用方法。
     //public function initPage(){
