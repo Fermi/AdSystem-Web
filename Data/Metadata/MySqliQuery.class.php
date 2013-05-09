@@ -49,7 +49,7 @@ class MysqliQuery{
         $sql .= self::_formatWhereSql($wherearray);
         $sql .= self::_formatOrderBySql($orderarray);
         $sql .= self::_formatGroupBySql($grouparray);
-        if(isset($limit)){
+        if(!empty($limit)){
             if(is_array($limit)){
                 $sql .= 'LIMIT'.$limit['down'].','.$limit['up'];
             } else {
