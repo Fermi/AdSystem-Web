@@ -55,28 +55,28 @@ class Page {
     }
     
     //控制器中注册控件.
-    public function registWidget($name,$params){
-        return $widgets->regist($name,$params);
+    public function registWidget($name,$params,$prefix=NULL){
+        return $this->widgets->regist($name,$params,$prefix);
     }
     //页面导出控件css.
     public function exportWidgetCss(){
-        echo $widgets->getStyles();
+        echo $this->widgets->getStyles();
     }
     //页面导出控件div.
-    public function exportWidgetTemplate($name){
-        echo $widgets->getTemplate($name);
+    public function exportWidgetTemplate($full_name){
+        echo $this->widgets->getTemplate($full_name);
     }
     //页面导出控件JS.
     public function exportWidgetScript(){
-        echo $widgets->getScripts();
+        echo $this->widgets->getScripts();
     }
     //控制器中注册插件.
     //public function registPlugin($name,$params){
-    //    return $plugins->regist($name,$params);
+    //    return $this->plugins->regist($name,$params);
     //}
     //页面导出插件结果.
     //public function exportPluginResult($name){
-    //    echo $plugins->getResult($name);
+    //    echo $this->plugins->getResult($name);
     //}
     //继承控制器基类的控制器类需要覆盖的默认调用方法。
     //public function initPage(){
