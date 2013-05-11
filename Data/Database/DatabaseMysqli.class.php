@@ -16,9 +16,7 @@ class DatabaseMysqli {
         if(isset($sql)){
             $result_set = mysqli_query($dbconn,$sql->getSqlString());
             $result = array();
-            if(!is_array($result_set)){
-                return $result_set;
-            } else {
+            if(($result_set)&&(!is_bool($result_set))){
                 if(defined('DEFAULT_RESULT_STYLE_ARRAY')){
                     while($result_row = mysqli_fetch_assoc($result_set)){
                         $result[] = $result_row;
@@ -29,6 +27,8 @@ class DatabaseMysqli {
                     }
                 }
                 return $result;
+            } else {
+                return $result_set;
             } 
         } else{
             return false;
