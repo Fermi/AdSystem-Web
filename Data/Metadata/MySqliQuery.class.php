@@ -117,22 +117,22 @@ class MysqliQuery{
             foreach($wherearray as $key => $wr){
                 switch(strtoupper($wr['condition'])){
                     case 'LT':
-                        $where_str .= '`'.$key.'`<'.$wr['value'];
+                        $where_str .= '`'.$key.'`<"'.$wr['value'].'"';
                         break;
                     case 'LE':
-                        $where_str .= '`'.$key.'`<='.$wr['value'];
+                        $where_str .= '`'.$key.'`<="'.$wr['value'].'"';
                         break;
                     case 'GT':
-                        $where_str .= '`'.$key.'`>'.$wr['value'];
+                        $where_str .= '`'.$key.'`>"'.$wr['value'].'"';
                         break;
                     case 'GE':
-                        $where_str .= '`'.$key.'`>='.$wr['value'];
+                        $where_str .= '`'.$key.'`>="'.$wr['value'].'"';
                         break;
                     case 'NE':
-                        $where_str .= '`'.$key.'`<>'.$wr['value'];
+                        $where_str .= '`'.$key.'`<>"'.$wr['value'].'"';
                         break;
                     case 'EQ':
-                        $where_str .= '`'.$key.'`='.$wr['value'];
+                        $where_str .= '`'.$key.'`="'.$wr['value'].'"';
                         break;
                     case 'IN':
                         $str_tmp = '';
