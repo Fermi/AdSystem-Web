@@ -17,7 +17,7 @@ class ActionLoader{
         }else{
             if(defined("ACTION_MODULE")) {
                 require ACTION_MODULE.'/'.$module_name.'Action/'.$action_name.'Action.class.php';
-                if(method_exists($Action_name.'Action',$this->_ajaxMethodName)) {
+                if(method_exists($action_name.'Action',$this->_ajaxMethodName)) {
                     $action_class_name = $action_name.'Action';
                     $action_obj = new $action_class_name;
                     call_user_func(array($action_obj,$this->_ajaxMethodName));
