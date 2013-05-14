@@ -36,7 +36,13 @@ class MysqliQuery{
             $key_array_count = count($keyarray);
             $key_count = 0;
             foreach($keyarray as $ky){
-                $sql .= '`'.$ky.'`';
+                if(isset($ky['function'])){
+                    $sql .= strtoupper($ky['function']).'(`'.$ky['key'].'`)';
+                } else if(isset($ky['filter'])){
+                    $sql .= strtoupper($ky['filter']).' `'.$ky['key'].'`';
+                } else {
+                    $sql .= '`'.$ky.'`';
+                }
                 if($key_count < $key_array_count-1){
                     $sql .= ',';
                 }
