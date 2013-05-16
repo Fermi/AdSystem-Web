@@ -66,6 +66,7 @@ class MysqliQuery{
         return $sql;
     }
     public static function formatUpdateSqlQuery($table,$keyarray,$valuearray,$wherearray,$limit){
+        $str_tmp = '';
         if(empty($table)){
             echo "未指定数据表名";
             return null;

@@ -13,10 +13,10 @@ class SqlQueryManager{
                 $this->sqlquery = $this->_formatSelectSqlQuery($table,$keyarray,$wherearray,$orderarray,$grouparray,$order,$limit);
                 break;
             case 'UPDATE':
-                $this->sqlquery = $this->_formatUpdateSqlQuery($table,$keyarray,$valuearray);
+                $this->sqlquery = $this->_formatUpdateSqlQuery($table,$keyarray,$valuearray,$wherearray,$limit);
                 break;
             case 'DELETE':
-                $this->sqlquery = $this->_formatDeleteSqlQuery($table,$keyarray);
+                $this->sqlquery = $this->_formatDeleteSqlQuery($table,$keyarray,$limit);
                 break;
             default:
                 break;
