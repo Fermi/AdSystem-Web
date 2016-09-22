@@ -38,12 +38,12 @@ class WidgetManager{
             }
         }
         if(file_exists($template_file_path)){
-            $this->template[$full_name] = template_parser_pause($this,$template_file_path,$params);
+            $this->template[$full_name] = template_parser_parse($this,$template_file_path,$params);
         } else {
             $this->template[$full_name] = $name.'控件不存在';
         }
         if(file_exists($script_file_path)){
-            $this->script .= template_parser_pause($this,$script_file_path,$params);
+            $this->script .= template_parser_parse($this,$script_file_path,$params);
         }
 
     }
