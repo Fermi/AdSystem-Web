@@ -32,7 +32,7 @@ class Page {
                 $renderDir = BASE_TEMPLATES_DIR.$templateIdentifier;
             }
  
-            echo template_parser_pause($this,$renderDir,$params);
+            echo template_parser_parse($this,$renderDir,$params);
         }
     }  
     //加载PHP页面脚本公有方法。
@@ -48,7 +48,7 @@ class Page {
                 $renderDir = BASE_SCRIPTS_DIR.$scriptIdentifier;
             }
 
-            $renderResult = template_parser_pause($this,$renderDir,$params);
+            $renderResult = template_parser_parse($this,$renderDir,$params);
 
             echo $renderResult;
         }
